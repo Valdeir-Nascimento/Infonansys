@@ -1,0 +1,46 @@
+<nav class="md-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/categories">Categorias</a></li>
+        <!-- <li class="breadcrumb-item active"><a routerLink="/"></a></li> -->
+    </ol>
+</nav>
+
+<div class="row mb-4">
+    <div class="col-md">
+        <h3 class="h3 border-left pl-2">Categoria</h3>
+    </div>
+
+    <div class="col-md">
+        <a routerLink="/categorias" class="btn btn-success float-right">
+            Voltar
+        </a>
+    </div>
+</div>
+
+<form>
+    <div class="card">
+        <div class="card-header">
+            Informações sobre a categoria
+        </div>
+
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-mb-4">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="nome" formControlName="nome">
+                </div>
+
+                <div class="form-group col-md-8">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="descricao" formControlName="descricao">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg float-right mt-3">
+        Salvar
+    </button>
+
+</form>
