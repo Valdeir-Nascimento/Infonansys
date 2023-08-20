@@ -1,5 +1,5 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { Categoria } from "./categoria.model";
@@ -9,12 +9,12 @@ import { Categoria } from "./categoria.model";
 })
 export class CategoriaService {
 
-    private apiPath: string = "api/categorias";
+    private apiPath: string = "http://localhost:3000";
 
     constructor(private http: HttpClient) { }
 
     buscarTodos(): Observable<Categoria[]> {
-        return this.http.get(this.apiPath).pipe(
+        return this.http.get(`${this.apiPath}/categorias`).pipe(
             catchError(this.handleError),
             map(this.convertToCategorias)
         );

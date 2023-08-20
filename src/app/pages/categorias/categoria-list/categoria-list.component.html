@@ -31,10 +31,10 @@
     </thead>
 
     <tbody>
-        <tr>
+        <tr *ngFor="let category of categorias">
             <td>
-                <strong>Restaurante</strong><br>
-                <small>Almoço do dia dos pais</small>
+                <strong>{{ category.nome }}</strong><br>
+                <small>{{ category.descricao }}</small><br>
             </td>
 
             <td>
