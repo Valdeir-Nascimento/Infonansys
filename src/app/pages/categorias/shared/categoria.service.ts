@@ -13,11 +13,19 @@ export class CategoriaService {
 
     constructor(private http: HttpClient) { }
 
-    buscarTodos(): Observable<Categoria[]> {
+    listar(): Observable<Categoria[]> {
         return this.http.get(`${this.apiPath}/categorias`).pipe(
             catchError(this.handleError),
             map(this.convertToCategorias)
         );
+    }
+
+    buscarPorId(idCategoria: number): Observable<Categoria> {
+        const url = `${this.apiPath}/${idCategoria}`;
+        return this.http.get(url).pipe(
+            catchError(this.handleError),
+            map(this.jsonDataToCategoria)
+        )
     }
 
     private convertToCategorias(jsonData: any[]): Categoria[] {

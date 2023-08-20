@@ -13,6 +13,10 @@ const routes: Routes = [
     {
         path: 'cadastrar',
         component: CategoriaFormComponent
+    },
+    {
+        path: ':id/editar',
+        component: CategoriaFormComponent
     }
 ]
 
