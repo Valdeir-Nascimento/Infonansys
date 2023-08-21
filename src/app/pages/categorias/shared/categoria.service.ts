@@ -9,24 +9,48 @@ import { Categoria } from "./categoria.model";
 })
 export class CategoriaService {
 
-    private apiPath: string = "http://localhost:3000";
+    private apiPath: string = "http://localhost:3000/categorias";
 
     constructor(private http: HttpClient) { }
 
     listar(): Observable<Categoria[]> {
-        return this.http.get(`${this.apiPath}/categorias`).pipe(
+        return this.http.get(`${this.apiPath}`).pipe(
             catchError(this.handleError),
             map(this.convertToCategorias)
         );
     }
 
-    buscarPorId(idCategoria: number): Observable<Categoria> {
-        const url = `${this.apiPath}/${idCategoria}`;
+    buscarPorId(id: number): Observable<Categoria> {
+        const url = `${this.apiPath}/${id}`;
         return this.http.get(url).pipe(
             catchError(this.handleError),
             map(this.jsonDataToCategoria)
         )
     }
+
+    cadastrar(categoria: Categoria): Observable<Categoria> {
+        return this.http.post(this.apiPath, categoria).pipe(
+            catchError(this.handleError),
+            map(this.jsonDataToCategoria)
+        );
+    }
+
+    editar(categoria: Categoria): Observable<Categoria> {
+        const url = `${this.apiPath}/${categoria.id}`;
+        return this.http.put(url, categoria).pipe(
+            catchError(this.handleError),
+            map(() => categoria)
+        )
+    }
+
+    excluir(id: number): Observable<any> {
+        const url = `${this.apiPath}/${id}`;
+        return this.http.delete(url).pipe(
+            catchError(this.handleError),
+            map(() => null)
+        )
+    }
+
 
     private convertToCategorias(jsonData: any[]): Categoria[] {
         const categorias: Categoria[] = [];

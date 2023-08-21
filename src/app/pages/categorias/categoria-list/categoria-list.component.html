@@ -31,15 +31,15 @@
     </thead>
 
     <tbody>
-        <tr *ngFor="let category of categorias">
+        <tr *ngFor="let categoria of categorias">
             <td>
-                <strong>{{ category.nome }}</strong><br>
-                <small>{{ category.descricao }}</small><br>
+                <strong>{{ categoria.nome }}</strong><br>
+                <small>{{ categoria.descricao }}</small><br>
             </td>
 
             <td>
-                <a class="btn btn-outline-info btn-sm mr-2">Editar</a>
-                <button class="btn btn-outline-danger btn-sm">Excluir</button>
+                <a [routerLink]="[categoria.id, 'editar']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
+                <button (click)="excluir(categoria)" class="btn btn-outline-danger btn-sm">Excluir</button>
             </td>
         </tr>
     </tbody>
