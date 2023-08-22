@@ -24,6 +24,15 @@ export class LancamentoService {
         );
     }
 
+    buscarPorId(id: number): Observable<Lancamento> {
+        const url = `${this.apiPath}/${id}`;
+        return this.http.get(url).pipe(
+            catchError(this.handleError),
+            map(this.jsonDataToLancamento)
+        );
+    }
+
+
     private jsonDataToLancamentos(jsonData: any[]): Lancamento[] {
         const entries: Lancamento[] = [];
         jsonData.forEach(element => {
