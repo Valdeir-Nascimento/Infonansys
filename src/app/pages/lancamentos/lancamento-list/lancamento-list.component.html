@@ -1,1 +1,59 @@
-<p>lancamento-list works!</p>
+<nav class="md-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/">Home</a>
+        </li>
+
+        <li class="breadcrumb-item active">
+            <a routerLink="/">Lançamentos</a>
+        </li>
+    </ol>
+</nav>
+
+<div class="row mb-4">
+    <div class="col-md">
+        <h3 class="h3 border-left pl-2">Lançamentos</h3>
+    </div>
+
+    <div class="col-md">
+        <a routerLink="cadastrar" class="btn btn-success float-right">
+            Novo Lançamento
+        </a>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="bg-primary text-light">
+            <th>Lançamento</th>
+            <th>Categoria</th>
+            <th class="text-right">Valor R$</th>
+            <th class="text-center">Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let lancamento of lancamentos">
+            <td>
+                <strong>{{ lancamento.nome }}</strong><br>
+                <small class="text-success">{{ lancamento.data }}</small><br>
+                <small *ngIf="lancamento.descricao">{{ lancamento.descricao }}</small>
+            </td>
+
+            <td> {{ lancamento.categoria?.nome }}</td>
+
+            <td class="text-right">
+                <strong [class.text-sucess]="lancamento.tipo == 'revenue'" [class.text-danger]="lancamento.tipo == 'expense'">
+                    {{ lancamento.valor }}
+                </strong>
+                <br>
+                <span class="badge badge-light">{{ lancamento.paidText }}</span>
+            </td>
+
+            <td class="text-center">
+                <a [routerLink]="[lancamento.id, 'editar']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
+                <button (click)="excluir(lancamento)" class="btn btn-outline-danger btn-sm">Excluir</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
