@@ -34,8 +34,64 @@ export class LancamentoFormComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.setCurrentAction();
+        this.buildLancamentoForm();
+        this.loadLancamento();
+        this.loadCategorias();
     }
 
+    ngAfterContentChecked(): void {
+        this.setPageTitle();
+    }
+
+
+    submitForm() {
+        this.submittingForm = true;
+        if (this.currentAction == 'new') {
+            this.cadastrar();
+        } else {
+            this.editar();
+        }
+    }
+
+    cadastrar() {
+        const lancamento: Lancamento = Object.assign(new Lancamento(), this.lancamentoForm?.value);
+        this.lancamentoService.cadastrar(lancamento).subscribe(
+            (lancamento) => this.actionsForSuccess(lancamento),
+            (error) => this.actionsForError(error)
+        )
+    }
+
+    get typeOptions(): Array<any> {
+        return Object.entries(Lancamento.types).map(([value, text]) => {
+            return {
+                text: text,
+                value: value
+            }
+        })
+    }
+
+    private setCurrentAction() {
+        if (this.route.snapshot.url[0].path == 'cadastrar') {
+            this.currentAction = 'cadastrar';
+        } else {
+            this.currentAction = 'editar';
+        }
+    }
+
+    private buildLancamentoForm() {
+        this.lancamentoForm = this.formBuilder.group({
+            id: [null],
+            name: [null, [Validators.required, Validators.minLength(2)]],
+            description: [null],
+            type: ["expense", [Validators.required]],
+            amount: [null, [Validators.required]],
+            date: [null, [Validators.required]],
+            paid: [true, [Validators.required]],
+            categoryId: [null, [Validators.required]]
+
+        })
+    }
 
     private loadLancamento() {
         if (this.currentAction == 'editar') {
@@ -51,17 +107,7 @@ export class LancamentoFormComponent implements OnInit {
         }
     }
 
-
-    cadastrar() {
-        const lancamento: Lancamento = Object.assign(new Lancamento(), this.lancamentoForm?.value);
-        this.lancamentoService.cadastrar(lancamento).subscribe(
-            (lancamento) => this.actionsForSuccess(lancamento),
-            (error) => this.actionsForError(error)
-        )
-    }
-
-
-    private editarLancamento() {
+    private editar() {
         const lancamento: Lancamento = Object.assign(new Lancamento(), this.lancamentoForm?.value);
         this.lancamentoService.editar(lancamento).subscribe(
             (lancamento) => this.actionsForSuccess(lancamento),
@@ -87,7 +133,7 @@ export class LancamentoFormComponent implements OnInit {
     }
 
 
-    private loadCategories() {
+    private loadCategorias() {
         this.categoriaService.listar().subscribe(categorias => this.categorias = categorias)
     }
 
