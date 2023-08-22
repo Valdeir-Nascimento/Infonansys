@@ -32,6 +32,31 @@ export class LancamentoService {
         );
     }
 
+    cadastrar(lancamento: Lancamento): Observable<Lancamento> {
+        return this.categoriaService.buscarPorId(lancamento.categoriaId!).pipe(
+            flatMap(categoria => {
+                lancamento.categoria = categoria;
+                return this.http.post(this.apiPath, lancamento).pipe(
+                    catchError(this.handleError),
+                    map(this.jsonDataToLancamento)
+                );
+            })
+        )
+    }
+
+    editar(lancamento: Lancamento): Observable<Lancamento> {
+        const url = `${this.apiPath}/${lancamento.id}`;
+        return this.categoriaService.buscarPorId(lancamento.categoriaId!).pipe(
+            flatMap(categoria => {
+                lancamento.categoria = categoria;
+                return this.http.put(url, lancamento).pipe(
+                    catchError(this.handleError),
+                    map(() => lancamento)
+                )
+            })
+        )
+    }
+
 
     private jsonDataToLancamentos(jsonData: any[]): Lancamento[] {
         const entries: Lancamento[] = [];
