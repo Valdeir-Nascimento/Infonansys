@@ -6,11 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
 
 @NgModule({
     declarations: [
         NavbarComponent,
-        FooterComponent
+        FooterComponent,
+        BreadCrumbComponent
     ],
     imports: [
         CommonModule,
