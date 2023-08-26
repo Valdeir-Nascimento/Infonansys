@@ -14,8 +14,8 @@ export class Lancamento {
     ) { }
 
     static types = {
-        expense: 'Despesa',
-        revenue: 'Receita'
+        despesa: 'Despesa',
+        receita: 'Receita'
     }
 
     get paidText(): string {

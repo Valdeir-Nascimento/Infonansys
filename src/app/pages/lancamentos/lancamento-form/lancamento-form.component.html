@@ -1,1 +1,159 @@
-<p>lancamento-form works!</p>
+<nav class="md-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/lancamentos">Lançamentos</a></li>
+        <li class="breadcrumb-item active"><a routerLink="/">{{ pageTitle }}</a></li>
+    </ol>
+</nav>
+
+<div class="row mb-4">
+    <div class="col-md-9">
+        <h3 class="h3 border-left pl-2">{{ pageTitle }}</h3>
+    </div>
+
+    <div class="col-md-3">
+        <a routerLink="/lancamentos" class="btn btn-success float-right">
+            Voltar
+        </a>
+    </div>
+</div>
+
+<form [formGroup]="lancamentoForm" (submit)="submitForm()">
+    <div class="card">
+        <div class="card-header">
+            Informações sobre o Lançamento
+        </div>
+
+        <div class="card-body">
+
+            <div class="form-row">
+
+                <!-- Type -->
+                <div class="form-group col-mb-2">
+                    <label for="tipo">Tipo</label>
+
+                    <select name="tipo" id="tipo" formControlName="tipo" class="form-control">
+                        <option *ngFor="let option of typeOptions" [value]="option.value" >{{ option.text }}</option>
+                    </select>
+
+                    <div class="text-danger" *ngIf="lancamentoForm.get('tipo')?.invalid && lancamentoForm.get('tipo')?.touched">
+                        <div *ngIf="lancamentoForm.get('tipo')?.errors?.required">Dado obrigatório</div>
+                    </div>
+                </div>
+
+
+                <!-- Lançamento -->
+                <div class="form-group col-mb-5">
+                    <label for="nome">Lançamento</label>
+                    <input type="text" class="form-control" id="nome" formControlName="nome">
+
+                    <div class="text-danger" *ngIf="lancamentoForm.get('nome')?.invalid && lancamentoForm.get('nome')?.touched">
+                        <div *ngIf="lancamentoForm.get('nome')?.errors?.required">Campo é obrigatório</div>
+                        <div *ngIf="lancamentoForm.get('nome')?.errors?.minlength">Deve ter no minimo 2 caracteres</div>
+                    </div>
+                </div>
+
+                <!-- Valor -->
+                <div class="form-group col-mb-3">
+                    <label for="valor">Valor</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">R$</div>
+                        </div>
+                        <input
+                            id="valor"
+                            [imask]="imaskConfig"
+                            type="text"
+                            class="form-control text-right"
+                            formControlName="valor">
+                    </div>
+
+                    <div class="text-danger"
+                        *ngIf="lancamentoForm.get('valor')?.invalid && lancamentoForm.get('valor')?.touched">
+                        <div *ngIf="lancamentoForm.get('valor')?.errors?.required">Campo é obrigatório</div>
+                    </div>
+                </div>
+
+
+                 <!-- Data -->
+                 <div class="form-group col-mb-3">
+                    <label for="data">Data</label>
+                    <div class="input-group">
+                        <div class="form-group col-mb-2">
+
+                            <p-calendar id="data" formControlName="data" inputStyleClass="form-control"
+                                dataType="string" dateFormat="dd/mm/yy" [locale]="ptBR" [showButtonBar]="true">
+                            </p-calendar>
+
+                            <div class="text-danger"
+                                *ngIf="lancamentoForm.get('data')?.invalid && lancamentoForm.get('data')?.touched">
+                                <div *ngIf="lancamentoForm.get('data')?.errors?.required">Dado obrigatório</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Pago -->
+            <div class="form-row">
+                <label for="pago">Pago</label>
+                <div class="input-group">
+                    <div class="form-group col-mb-2">
+                        <div class="btn-group">
+                            <label (click)="lancamentoForm.get('pago')?.setValue(true)" [class.active]="lancamentoForm.get('pago')?.value == true" class="btn btn-outline-info">Pago</label>
+                            <label (click)="lancamentoForm.get('pago')?.setValue(false)" [class.active]="lancamentoForm.get('pago')?.value == false" class="btn btn-outline-info">Pendente</label>
+                        </div>
+
+                        <div class="text-danger"
+                            *ngIf="lancamentoForm.get('pago')?.invalid && lancamentoForm.get('pago')?.touched">
+                            <div *ngIf="lancamentoForm.get('pago')?.errors?.required">Dado obrigatório</div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- CategoriaId -->
+                 <div class="form-group col-mb-3">
+                    <label for="categoriaId">Categoria</label>
+
+                    <select name="categoriaId" id="categoriaId" formControlName="categoriaId" class="form-control">
+                        <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nome }}</option>
+
+                    </select>
+
+                    <div class="text-danger" *ngIf="lancamentoForm.get('categoriaId')?.invalid && lancamentoForm.get('categoriaId')?.touched">
+                        <div *ngIf="lancamentoForm.get('categoriaId')?.errors?.required">Campo é obrigatório</div>
+                    </div>
+                </div>
+
+                <!-- Descricao -->
+                <div class="form-group col-md-7">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="descricao" formControlName="descricao">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="alert alert-danger mt-4" *ngIf="!serverErrorMessages">
+        <strong>Error no servidor:</strong>
+        <ul>
+            <li *ngFor="let error of serverErrorMessages">{{ error }}</li>
+        </ul>
+    </div>
+
+    <button
+        [disabled]="lancamentoForm.invalid"
+        type="submit"
+        class="btn btn-primary btn-lg float-right mt-3">
+        Salvar
+    </button>
+
+</form>
+
+<pre>
+    {{ lancamentoForm.value | json }}
+</pre>

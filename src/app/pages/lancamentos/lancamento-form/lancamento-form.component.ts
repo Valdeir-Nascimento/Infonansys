@@ -24,6 +24,29 @@ export class LancamentoFormComponent implements OnInit {
     lancamento: Lancamento = new Lancamento();
     categorias: Categoria[] = [];
 
+    imaskConfig = {
+        mask: Number,
+        scale: 2,
+        thousandsSeparator: '',
+        padFractionalZeros: true,
+        normalizeZeros: true,
+        radix: ','
+    };
+
+    ptBR = {
+        firstDayOfWeek: 0,
+        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+        dayNamesMin: ['Do', 'Se', 'Te', 'Qu', 'Qu', 'Se', 'Sa'],
+        monthNames: [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho',
+            'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ],
+        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        today: 'Hoje',
+        clear: 'Limpar'
+    };
+
     constructor(
         private lancamentoService: LancamentoService,
         private route: ActivatedRoute,
@@ -47,7 +70,7 @@ export class LancamentoFormComponent implements OnInit {
 
     submitForm() {
         this.submittingForm = true;
-        if (this.currentAction == 'new') {
+        if (this.currentAction == 'cadastrar') {
             this.cadastrar();
         } else {
             this.editar();
@@ -62,14 +85,20 @@ export class LancamentoFormComponent implements OnInit {
         )
     }
 
-    get typeOptions(): Array<any> {
-        return Object.entries(Lancamento.types).map(([value, text]) => {
-            return {
-                text: text,
-                value: value
-            }
-        })
-    }
+    typeOptions = [
+        { value: 'despesa', text: 'Despesa' },
+        { value: 'receita', text: 'Receita' }
+      ];
+
+    // get typeOptions(): Array<any> {
+    //     return Object.entries(Lancamento.types).map(([value, text]) => {
+    //         console.log(value, text)
+    //         return {
+    //             text: text,
+    //             value: value
+    //         }
+    //     })
+    // }
 
     private setCurrentAction() {
         if (this.route.snapshot.url[0].path == 'cadastrar') {
@@ -82,14 +111,13 @@ export class LancamentoFormComponent implements OnInit {
     private buildLancamentoForm() {
         this.lancamentoForm = this.formBuilder.group({
             id: [null],
-            name: [null, [Validators.required, Validators.minLength(2)]],
-            description: [null],
-            type: ["expense", [Validators.required]],
-            amount: [null, [Validators.required]],
-            date: [null, [Validators.required]],
-            paid: [true, [Validators.required]],
-            categoryId: [null, [Validators.required]]
-
+            nome: [null, [Validators.required, Validators.minLength(2)]],
+            descricao: [null],
+            tipo: ["receita", [Validators.required]],
+            valor: [null, [Validators.required]],
+            data: [null, [Validators.required]],
+            pago: [true, [Validators.required]],
+            categoriaId: [null, [Validators.required]]
         })
     }
 

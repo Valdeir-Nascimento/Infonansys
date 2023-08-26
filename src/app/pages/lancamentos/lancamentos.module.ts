@@ -16,8 +16,8 @@ import { CalendarModule } from 'primeng/calendar';
         CommonModule,
         LancamentoRoutingModule,
         ReactiveFormsModule,
-        // CalendarModule,
-        // IMaskModule
+        CalendarModule,
+        IMaskModule
     ]
 })
 export class LancamentosModule { }
