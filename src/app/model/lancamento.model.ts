@@ -1,4 +1,4 @@
-import { Categoria } from "../../categorias/shared/categoria.model";
+import { Categoria } from "./categoria.model";
 
 export class Lancamento {
     constructor(

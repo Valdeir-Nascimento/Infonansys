@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LancamentoListComponent } from './lancamento-list/lancamento-list.component';
-import { LancamentoFormComponent } from './lancamento-form/lancamento-form.component';
-import { LancamentoRoutingModule } from './lancamentos-routing.module';
 import { IMaskModule } from 'angular-imask';
 import { CalendarModule } from 'primeng/calendar';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { LancamentoFormComponent } from './lancamento-form/lancamento-form.component';
+import { LancamentoListComponent } from './lancamento-list/lancamento-list.component';
+import { LancamentoRoutingModule } from './lancamentos-routing.module';
+
 
 @NgModule({
     declarations: [
         LancamentoListComponent,
-        LancamentoFormComponent
+        LancamentoFormComponent,
     ],
     imports: [
-        CommonModule,
+        SharedModule,
         LancamentoRoutingModule,
         ReactiveFormsModule,
         CalendarModule,
-        IMaskModule
+        IMaskModule,
     ]
 })
 export class LancamentosModule { }

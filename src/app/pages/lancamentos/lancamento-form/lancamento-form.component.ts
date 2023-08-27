@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LancamentoService } from '../shared/lancamento.service';
+import { LancamentoService } from '../../../service/lancamento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import * as toastr from "toastr";
-import { CategoriaService } from '../../categorias/shared/categoria.service';
-import { Lancamento } from '../shared/lancamento.model';
-import { Categoria } from '../../categorias/shared/categoria.model';
+import { CategoriaService } from '../../../service/categoria.service';
+import { Lancamento } from '../../../model/lancamento.model';
+import { Categoria } from '../../../model/categoria.model';
 
 @Component({
     selector: 'app-lancamento-form',
@@ -90,15 +90,6 @@ export class LancamentoFormComponent implements OnInit {
         { value: 'receita', text: 'Receita' }
       ];
 
-    // get typeOptions(): Array<any> {
-    //     return Object.entries(Lancamento.types).map(([value, text]) => {
-    //         console.log(value, text)
-    //         return {
-    //             text: text,
-    //             value: value
-    //         }
-    //     })
-    // }
 
     private setCurrentAction() {
         if (this.route.snapshot.url[0].path == 'cadastrar') {

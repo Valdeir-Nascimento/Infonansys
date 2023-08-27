@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CategoriaService } from '../../categorias/shared/categoria.service';
-import { Lancamento } from './lancamento.model';
+import { CategoriaService } from './categoria.service';
+import { Lancamento } from '../model/lancamento.model';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, flatMap } from 'rxjs/operators';
 

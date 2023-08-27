@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Lancamento } from '../shared/lancamento.model';
-import { LancamentoService } from '../shared/lancamento.service';
+import { Lancamento } from '../../../model/lancamento.model';
+import { LancamentoService } from '../../../service/lancamento.service';
 
 @Component({
     selector: 'app-lancamento-list',

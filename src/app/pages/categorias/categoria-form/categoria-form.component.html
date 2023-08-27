@@ -1,10 +1,4 @@
-<nav class="md-5">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-        <li class="breadcrumb-item"><a routerLink="/categorias">Categorias</a></li>
-        <li class="breadcrumb-item active"><a routerLink="/"></a>{{ pageTitle }}</li>
-    </ol>
-</nav>
+<app-bread-crumb [items]="[{text: 'Categorias', link: '/categorias'}, {text: pageTitle}]"></app-bread-crumb>
 
 <div class="row mb-4">
     <div class="col-md">
