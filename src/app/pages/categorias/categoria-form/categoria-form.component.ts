@@ -34,6 +34,22 @@ export class CategoriaFormComponent implements OnInit {
         this.loadCategoria();
     }
 
+    cadastrar() {
+        const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
+        this.categoryService.cadastrar(categoria).subscribe(
+            (categoria) => this.actionsForSuccess(categoria),
+            (error) => this.actionsForError(error)
+        )
+    }
+
+    editar() {
+        const category: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
+        this.categoryService.editar(category).subscribe(
+            (categoria) => this.actionsForSuccess(categoria),
+            (error) => this.actionsForError(error)
+        )
+    }
+
     ngAfterContentChecked(): void {
         this.setPageTitle();
     }
@@ -87,28 +103,9 @@ export class CategoriaFormComponent implements OnInit {
         }
     }
 
-    cadastrar() {
-        const category: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
-        this.categoryService.cadastrar(category).subscribe(
-            (category) => this.actionsForSuccess(category),
-            (error) => this.actionsForError(error)
-        )
-    }
-
-    private editar() {
-        const category: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
-        this.categoryService.editar(category).subscribe(
-            (category) => this.actionsForSuccess(category),
-            (error) => this.actionsForError(error)
-        )
-    }
-
-    //Redirect/reload component page
-    private actionsForSuccess(category: Categoria) {
+    private actionsForSuccess(categoria: Categoria) {
         toastr.success('Operação realizada com sucesso');
-        this.router.navigateByUrl('categorias', { skipLocationChange: true }).then(
-            () => this.router.navigate(['categorias', category.id, 'editar'])
-        )
+        this.router.navigate(['categorias']);
     }
 
     private actionsForError(error: any) {
