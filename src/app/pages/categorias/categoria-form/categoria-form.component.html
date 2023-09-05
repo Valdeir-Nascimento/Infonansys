@@ -25,7 +25,9 @@
                     <input type="text" class="form-control" id="nome" formControlName="nome">
                     <div class="text-danger" *ngIf="categoriaForm.get('nome')?.invalid && categoriaForm.get('nome')?.touched">
                         <div *ngIf="categoriaForm.get('nome')?.errors?.required">Campo é obrigatório</div>
-                        <div *ngIf="categoriaForm.get('nome')?.errors?.minlength">Deve ter no minimo 2 caracteres</div>
+                        <div class="text-danger" *ngIf="categoriaForm.get('nome')?.hasError('pattern') && categoriaForm.get('nome')?.touched">
+                            O nome da categoria deve conter apenas letras.
+                        </div>
                     </div>
                 </div>
 

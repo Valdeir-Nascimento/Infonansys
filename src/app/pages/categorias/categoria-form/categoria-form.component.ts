@@ -39,7 +39,7 @@ export class CategoriaFormComponent implements OnInit {
         const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
         this.webStorageService.adicionarCategoria(categoria);
         this.categoriaService.cadastrar(categoria).subscribe(
-            (categoria) => this.actionsForSuccess(categoria),
+            () => this.actionsForSuccess(),
             (error) => this.actionsForError(error)
         )
     }
@@ -47,7 +47,7 @@ export class CategoriaFormComponent implements OnInit {
     editar() {
         const category: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
         this.categoriaService.editar(category).subscribe(
-            (categoria) => this.actionsForSuccess(categoria),
+            () => this.actionsForSuccess(),
             (error) => this.actionsForError(error)
         )
     }
@@ -77,7 +77,7 @@ export class CategoriaFormComponent implements OnInit {
     private buildFormCategoria() {
         this.categoriaForm = this.formBuilder.group({
             id: [null],
-            nome: [null, [Validators.required, Validators.minLength(2)]],
+            nome: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
             descricao: [null]
         })
     }
@@ -105,7 +105,7 @@ export class CategoriaFormComponent implements OnInit {
         }
     }
 
-    private actionsForSuccess(categoria: Categoria) {
+    private actionsForSuccess() {
         toastr.success('Operação realizada com sucesso');
         this.router.navigate(['categorias']);
     }
