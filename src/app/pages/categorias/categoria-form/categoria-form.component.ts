@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 import * as toastr from "toastr";
+import { WebStorageService } from 'src/app/service/webstorage.service';
 
 @Component({
     selector: 'app-categoria-form',
@@ -21,11 +22,11 @@ export class CategoriaFormComponent implements OnInit {
     categoria: Categoria = new Categoria();
 
     constructor(
-        private categoryService: CategoriaService,
+        private categoriaService: CategoriaService,
         private route: ActivatedRoute,
         private router: Router,
-        private formBuilder: FormBuilder
-
+        private formBuilder: FormBuilder,
+        private webStorageService: WebStorageService
     ) { }
 
     ngOnInit(): void {
@@ -36,7 +37,8 @@ export class CategoriaFormComponent implements OnInit {
 
     cadastrar() {
         const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
-        this.categoryService.cadastrar(categoria).subscribe(
+        this.webStorageService.adicionarCategoria(categoria);
+        this.categoriaService.cadastrar(categoria).subscribe(
             (categoria) => this.actionsForSuccess(categoria),
             (error) => this.actionsForError(error)
         )
@@ -44,7 +46,7 @@ export class CategoriaFormComponent implements OnInit {
 
     editar() {
         const category: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
-        this.categoryService.editar(category).subscribe(
+        this.categoriaService.editar(category).subscribe(
             (categoria) => this.actionsForSuccess(categoria),
             (error) => this.actionsForError(error)
         )
@@ -83,7 +85,7 @@ export class CategoriaFormComponent implements OnInit {
     private loadCategoria() {
         if (this.currentAction == 'editar') {
             this.route.paramMap.pipe(
-                switchMap(params => this.categoryService.buscarPorId(Number(params.get('id'))))
+                switchMap(params => this.categoriaService.buscarPorId(Number(params.get('id'))))
             ).subscribe(
                 (category) => {
                     this.categoria = category;

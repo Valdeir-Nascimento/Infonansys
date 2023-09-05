@@ -29,6 +29,11 @@
       "id": 10,
       "nome": "Transporte",
       "descricao": "gastos com transportes"
+    },
+    {
+      "id": 11,
+      "nome": "Cursos Online",
+      "descricao": "Pagamentos de cursos online na udemy"
     }
   ],
   "lancamentos": [
@@ -87,6 +92,21 @@
       "data": "18/11/2018",
       "valor": "15,00",
       "tipo": "despesa"
+    },
+    {
+      "id": 23,
+      "nome": "Curso frontend angular ",
+      "descricao": "curso de frontend angular",
+      "tipo": "despesa",
+      "valor": "22,00",
+      "data": "04/09/2023",
+      "pago": true,
+      "categoriaId": "11",
+      "categoria": {
+        "id": 11,
+        "nome": "Cursos Online",
+        "descricao": "Pagamentos de cursos online na udemy"
+      }
     }
   ]
 }

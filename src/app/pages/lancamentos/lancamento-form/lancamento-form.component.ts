@@ -47,6 +47,11 @@ export class LancamentoFormComponent implements OnInit {
         clear: 'Limpar'
     };
 
+    typeOptions = [
+        { value: 'despesa', text: 'Despesa' },
+        { value: 'receita', text: 'Receita' }
+    ];
+
     constructor(
         private lancamentoService: LancamentoService,
         private route: ActivatedRoute,
@@ -80,16 +85,10 @@ export class LancamentoFormComponent implements OnInit {
     cadastrar() {
         const lancamento: Lancamento = Object.assign(new Lancamento(), this.lancamentoForm?.value);
         this.lancamentoService.cadastrar(lancamento).subscribe(
-            (lancamento) => this.actionsForSuccess(lancamento),
+            () => this.actionsForSuccess(),
             (error) => this.actionsForError(error)
         )
     }
-
-    typeOptions = [
-        { value: 'despesa', text: 'Despesa' },
-        { value: 'receita', text: 'Receita' }
-      ];
-
 
     private setCurrentAction() {
         if (this.route.snapshot.url[0].path == 'cadastrar') {
@@ -129,16 +128,14 @@ export class LancamentoFormComponent implements OnInit {
     private editar() {
         const lancamento: Lancamento = Object.assign(new Lancamento(), this.lancamentoForm?.value);
         this.lancamentoService.editar(lancamento).subscribe(
-            (lancamento) => this.actionsForSuccess(lancamento),
+            () => this.actionsForSuccess(),
             (error) => this.actionsForError(error)
         )
     }
 
-    private actionsForSuccess(lancamento: Lancamento) {
+    private actionsForSuccess() {
         toastr.success('Operação realizada com sucesso');
-        this.router.navigateByUrl('lancamentos', { skipLocationChange: true }).then(
-            () => this.router.navigate(['lancamentos', lancamento.id, 'editar'])
-        )
+        this.router.navigate(['lancamentos']);
     }
 
     private actionsForError(error: any) {
