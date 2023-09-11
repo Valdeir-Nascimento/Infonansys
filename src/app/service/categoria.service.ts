@@ -28,11 +28,13 @@ export class CategoriaService {
         )
     }
 
-    cadastrar(categoria: Categoria): Observable<Categoria> {
-        return this.http.post(this.apiPath, categoria).pipe(
-            catchError(this.handleError),
-            map(this.jsonDataToCategoria)
-        );
+    async cadastrar(categoria: Categoria): Promise<Categoria> {
+        try {
+            const jsonData: any = await this.http.post(this.apiPath, categoria).toPromise();
+            return this.jsonDataToCategoria(jsonData);
+        } catch (error) {
+            throw error;
+        }
     }
 
     editar(categoria: Categoria): Observable<Categoria> {

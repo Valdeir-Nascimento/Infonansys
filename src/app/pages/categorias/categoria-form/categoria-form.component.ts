@@ -35,13 +35,15 @@ export class CategoriaFormComponent implements OnInit {
         this.loadCategoria();
     }
 
-    cadastrar() {
+    async cadastrar() {
         const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm?.value);
         this.webStorageService.adicionarCategoria(categoria);
-        this.categoriaService.cadastrar(categoria).subscribe(
-            () => this.actionsForSuccess(),
-            (error) => this.actionsForError(error)
-        )
+        try {
+            await this.categoriaService.cadastrar(categoria);
+            this.actionsForSuccess();
+        } catch (error) {
+            this.actionsForError(error);
+        }
     }
 
     editar() {
