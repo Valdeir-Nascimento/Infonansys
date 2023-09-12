@@ -40,16 +40,16 @@
     {
       "id": 13,
       "nome": "Gás de Cozinha",
+      "tipo": "despesa",
+      "valor": "30,00",
+      "data": "25/10/2018",
+      "pago": true,
       "categoriaId": 1,
       "categoria": {
         "id": 1,
         "nome": "Moradia",
         "descricao": "Pagamentos de contas da casa"
-      },
-      "pago": false,
-      "data": "25/10/2018",
-      "valor": "30,00",
-      "tipo": "despesa"
+      }
     },
     {
       "id": 14,
@@ -95,17 +95,17 @@
     },
     {
       "id": 23,
-      "nome": "Curso frontend angular ",
-      "descricao": "curso de frontend angular",
+      "nome": "Curso Angular Completo",
+      "descricao": "curso frontend udemy",
       "tipo": "despesa",
       "valor": "22,00",
       "data": "04/09/2023",
-      "pago": true,
+      "pago": false,
       "categoriaId": "11",
       "categoria": {
         "id": 11,
         "nome": "Cursos Online",
-        "descricao": "Pagamentos de cursos online na udemy"
+        "descricao": "Pagamentos de cursos online"
       }
     }
   ]
